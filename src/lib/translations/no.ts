@@ -3,7 +3,7 @@ import type { Itranslations } from './Itranslation';
 export const norwegianTranslations: Itranslations = {
 	meta: {
 		title: 'Haglund Software',
-		description: 'Programvareutvikling og rådgivning fra Vegard Haglund'
+		description: 'Backend- og fullstackutvikler i Norge — Vegard Haglund'
 	},
 	nav: {
 		brand: 'Haglund Software',
@@ -14,38 +14,42 @@ export const norwegianTranslations: Itranslations = {
 		contact: 'Kontakt'
 	},
 	hero: {
-		headline: 'Gjennomtenkt programvare som varer',
-		tagline:
-			'Uavhengig programvareutvikling fra Norge — API-er, webapper og fullstack-produkter.',
+		headline: 'Robuste backendløsninger, fra idé til produksjon',
+		tagline: 'Jeg utvikler API-er, backendsystemer og komplette webløsninger — fra Norge.',
 		cta: 'Ta kontakt'
 	},
 	about: {
 		title: 'Om meg',
-		body: 'Jeg hjelper team og gründere med å levere pålitelig programvare — fra enkle landingssider til API-er og fullstack-produkter. Jeg jobber pragmatisk, kommuniserer tydelig og etterlater kodebaser du kan vedlikeholde.',
+		body: 'Jeg heter Vegard Haglund og er selvstendig utvikler med base i Norge. Jeg spesialiserer meg på backendsystemer, men leverer også komplette webløsninger. Jeg utvikler API-er, datalag og brukergrensesnittene som knytter alt sammen — fra arkitektur og datamodellering til produksjonsklar kode. Kunstig intelligens bruker jeg som et praktisk verktøy for å lage prototyper raskere og feilsøke mer effektivt, uten at det går på bekostning av kvalitet eller vedlikeholdbarhet. Hos meg får du direkte dialog, tydelige råd og løsninger som er enkle å videreutvikle.',
 		location: 'Norge',
-		org: 'Haglund Software ENK'
+		org: 'Haglund Software',
+		portraitAlt: 'Portrett av Vegard Haglund'
 	},
 	services: {
 		title: 'Tjenester',
-		intro: 'Eksempler på hvordan jeg kan bidra. Omfang og teknologi tilpasses hvert prosjekt.',
+		intro:
+			'Dette kan jeg hjelpe deg med. Omfang og teknologivalg tilpasses behovene i hvert prosjekt.',
 		items: [
 			{
-				title: 'Webapper og nettsider',
-				summary: 'SvelteKit, React og TypeScript — markedsføringssider, dashbord og lette apper.'
+				title: 'API-er og backendløsninger',
+				summary:
+					'Utvikling med ASP.NET Core, PostgreSQL eller SQL Server — fra API-design og datalagring til integrasjoner og OpenAPI.'
 			},
 			{
-				title: 'Backend-API-er',
-				summary: 'ASP.NET Core med PostgreSQL eller SQL Server — design, persistens og OpenAPI.'
+				title: 'Komplette webløsninger',
+				summary:
+					'Fra backend og database til frontend — inkludert Docker Compose, migrasjoner og produksjonsklare bygg.'
 			},
 			{
-				title: 'Fullstack-leveranse',
-				summary: 'API, frontend og lokalt utviklingsmiljø — Docker Compose, migrasjoner og deploy-klare bygg.'
+				title: 'Webapplikasjoner og nettsider',
+				summary:
+					'SvelteKit, React og TypeScript — for dashbord, interne verktøy og markedsføringssider.'
 			}
 		]
 	},
 	projects: {
 		title: 'Prosjekter',
-		subtitle: 'Utvalgt arbeid og sideprosjekter.',
+		subtitle: 'Et utvalg kundeprosjekter og egne prosjekter.',
 		items: [
 			{
 				title: '[Prosjektnavn 1]',
@@ -61,7 +65,7 @@ export const norwegianTranslations: Itranslations = {
 	},
 	contact: {
 		title: 'Ta kontakt',
-		subtitle: 'Har du et prosjekt i tankene? Jeg hører gjerne fra deg.',
+		subtitle: 'Planlegger du et backend- eller fullstackprosjekt? Jeg tar gjerne en prat.',
 		email: 'vegardhaglund@proton.me',
 		emailLabel: 'E-post',
 		location: 'Norge',
@@ -71,7 +75,7 @@ export const norwegianTranslations: Itranslations = {
 		ctaLinkedIn: 'LinkedIn'
 	},
 	footer: {
-		tagline: 'Bygger gjennomtenkt programvare.',
-		rights: '© Haglund Software ENK — Norge'
+		tagline: 'Selvstendig utvikler innen backend og fullstack.',
+		rights: '© Haglund Software — Norge'
 	}
 };

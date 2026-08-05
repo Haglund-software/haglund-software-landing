@@ -21,6 +21,7 @@ export interface Itranslations {
 		body: string;
 		location: string;
 		org: string;
+		portraitAlt: string;
 	};
 	services: {
 		title: string;

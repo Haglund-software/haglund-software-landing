@@ -1,4 +1,5 @@
 <script lang="ts">
+	import portrait from '$lib/assets/Portrait.webp';
 	import { withLocale } from '$lib/paths';
 	import type { TranslationLocale } from '$lib/translations';
 
@@ -107,12 +108,21 @@
 		id="about"
 		class="bg-secondary flex min-h-dvh w-full flex-col justify-center px-6 py-16 md:px-12"
 	>
-		<div class="text-secondary-content mx-auto max-w-2xl">
-			<h2 class=" mb-4 text-3xl font-bold">{t.about.title}</h2>
-			<p class="text-secondary-content/90 mb-6 leading-relaxed">{t.about.body}</p>
-			<p class="text-secondary-content/75 text-sm">
-				{t.about.org} · {t.about.location}
-			</p>
+		<div class="text-secondary-content  mx-auto flex max-w-3xl flex-col items-center gap-8 md:flex-row md:items-start">
+			<img
+				src={portrait}
+				alt={t.about.portraitAlt}
+				width="192"
+				height="192"
+				class="ring-secondary-content/20 h-48 w-48 shrink-0 rounded-2xl object-cover shadow-lg ring-2"
+			/>
+			<div>
+				<h2 class="mb-4 text-3xl font-bold">{t.about.title}</h2>
+				<p class="text-secondary-content text-pretty text-sm md:text-lg mb-6 leading-relaxed">{t.about.body}</p>
+				<p class="text-secondary-content/75 text-sm">
+					{t.about.org} · {t.about.location}
+				</p>
+			</div>
 		</div>
 	</section>
 

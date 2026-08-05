@@ -3,7 +3,7 @@ import type { Itranslations } from './Itranslation';
 export const englishTranslations: Itranslations = {
 	meta: {
 		title: 'Haglund Software',
-		description: 'Software development and consulting by Vegard Haglund'
+		description: 'Solo backend and full-stack developer in Norway — Vegard Haglund'
 	},
 	nav: {
 		brand: 'Haglund Software',
@@ -14,38 +14,42 @@ export const englishTranslations: Itranslations = {
 		contact: 'Contact'
 	},
 	hero: {
-		headline: 'Thoughtful software, built to last',
+		headline: 'Reliable backends, delivered end to end',
 		tagline:
-			'Independent software development from Norway — APIs, web apps, and full-stack products.',
+			'Solo developer from Norway — API design, backend systems, and full-stack web products.',
 		cta: 'Get in touch'
 	},
 	about: {
 		title: 'About',
-		body: 'I help teams and founders ship reliable software — from lean landing pages to APIs and full-stack products. I work pragmatically, communicate clearly, and leave codebases you can maintain.',
+		body: "I'm Vegard Haglund — a solo developer based in Norway, focused on backend systems and full-stack delivery. I design and build APIs, data layers, and the web apps that connect to them — from architecture and persistence through to deploy-ready code. I use AI thoughtfully to speed up prototyping and make debugging more efficient, without compromising code quality or maintainability. You work directly with me: clear communication, practical choices, and software that's straightforward to maintain.",
 		location: 'Norway',
-		org: 'Haglund Software ENK'
+		org: 'Haglund Software',
+		portraitAlt: 'Portrait of Vegard Haglund'
 	},
 	services: {
 		title: 'Services',
-		intro: 'Examples of how I can help. Scope and stack are tailored to each project.',
+		intro: 'How I typically help — scope and stack are tailored to each project.',
 		items: [
 			{
-				title: 'Web apps & sites',
-				summary: 'SvelteKit, React, and TypeScript — marketing sites, dashboards, and lightweight apps.'
-			},
-			{
 				title: 'Backend APIs',
-				summary: 'ASP.NET Core with PostgreSQL or SQL Server — design, persistence, and OpenAPI.'
+				summary:
+					'ASP.NET Core with PostgreSQL or SQL Server — API design, persistence, integrations, and OpenAPI.'
 			},
 			{
 				title: 'Full-stack delivery',
-				summary: 'API, frontend, and local dev setup — Docker Compose, migrations, and deploy-ready builds.'
+				summary:
+					'Backend through frontend — Docker Compose, migrations, and builds ready for deployment.'
+			},
+			{
+				title: 'Web apps & sites',
+				summary:
+					'SvelteKit, React, and TypeScript — dashboards, internal tools, and marketing sites.'
 			}
 		]
 	},
 	projects: {
 		title: 'Projects',
-		subtitle: 'Selected work and side projects.',
+		subtitle: 'Selected client work and side projects.',
 		items: [
 			{
 				title: '[Project name 1]',
@@ -61,7 +65,7 @@ export const englishTranslations: Itranslations = {
 	},
 	contact: {
 		title: 'Get in touch',
-		subtitle: 'Have a project in mind? I would love to hear about it.',
+		subtitle: "Have a backend or full-stack project in mind? I'd like to hear about it.",
 		email: 'vegardhaglund@proton.me',
 		emailLabel: 'Email',
 		location: 'Norway',
@@ -71,7 +75,7 @@ export const englishTranslations: Itranslations = {
 		ctaLinkedIn: 'LinkedIn'
 	},
 	footer: {
-		tagline: 'Building thoughtful software.',
-		rights: '© Haglund Software ENK — Norway'
+		tagline: 'Solo developer. Backend and full-stack.',
+		rights: '© Haglund Software — Norway'
 	}
 };
