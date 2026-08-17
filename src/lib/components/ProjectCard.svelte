@@ -18,10 +18,11 @@
 				</a>
 				{#if project.favicon}<img
 						class="ms- justify-end"
-						width="24px"
-						height="32px"
+						width="24"
+						height="32"
 						alt="Icon for project {project.title}"
 						src={project.favicon}
+						referrerpolicy="no-referrer"
 					/>
 				{/if}
 			</h3>

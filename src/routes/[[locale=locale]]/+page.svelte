@@ -128,6 +128,7 @@
 	>
 		<a
 			href={localeHref('en')}
+			data-sveltekit-reload
 			class="btn btn-ghost btn-sm {locale === 'en' ? 'btn-active' : ''}"
 			aria-current={locale === 'en' ? 'page' : undefined}
 		>
@@ -135,6 +136,7 @@
 		</a>
 		<a
 			href={localeHref('no')}
+			data-sveltekit-reload
 			class="btn btn-ghost btn-sm {locale === 'no' ? 'btn-active' : ''}"
 			aria-current={locale === 'no' ? 'page' : undefined}
 		>
