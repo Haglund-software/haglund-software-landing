@@ -28,54 +28,62 @@ export const norwegianTranslations: Itranslations = {
 	services: {
 		title: 'Tjenester',
 		intro:
-			'Dette kan jeg hjelpe deg med. Omfang og teknologivalg tilpasses behovene i hvert prosjekt.',
+			'Fra en enkel nettside med domene til et fullstack-produkt på en skydatabase — jeg tar den biten du trenger, eller hele løsningen.',
 		items: [
 			{
-				title: 'API-er og backendløsninger',
+				title: 'Statiske nettsider og domener',
 				summary:
-					'Utvikling med ASP.NET Core, PostgreSQL eller SQL Server — fra API-design og datalagring til integrasjoner og OpenAPI.'
+					'Landingssider og markedsføringssider, inkludert domeneoppsett, DNS og hosting, slik at siden faktisk kommer på nett.'
 			},
 			{
-				title: 'Komplette webløsninger',
+				title: 'API-er',
 				summary:
-					'Fra backend og database til frontend — inkludert Docker Compose, migrasjoner og produksjonsklare bygg.'
+					'Dedikerte API-er med eller uten autentisering — design, datalagring, integrasjoner og OpenAPI som kan brukes fra hvilken som helst klient.'
 			},
 			{
-				title: 'Webapplikasjoner og nettsider',
+				title: 'Frontendintegrasjoner',
 				summary:
-					'SvelteKit, React og TypeScript — for dashbord, interne verktøy og markedsføringssider.'
+					'Koble et eksisterende brukergrensesnitt til en backend, eller bygg frontenden som snakker med et API du allerede har.'
+			},
+			{
+				title: 'Fullstack-applikasjoner',
+				summary:
+					'Komplette produkter med skydatabaser, autentisering, API-er og webappen foran — eller hva som helst derimellom.'
 			}
-		]
+		],
+		stackTitle: 'Teknologier',
+		stackIntro: 'Verktøyene jeg bruker mest — valgt etter oppgaven, ikke omvendt.',
+		contactNote:
+			'Trenger du noe mer konkret? Vi finner ut av omfang, teknologivalg og veien videre.',
+		contactCta: 'Ta kontakt'
 	},
 	projects: {
 		title: 'Prosjekter',
 		subtitle: 'Et utvalg kundeprosjekter og egne prosjekter.',
 		items: [
 			{
-				title: '[Prosjektnavn 1]',
-				description: '[Kort beskrivelse — hva det gjør og resultatet.]',
-				tags: ['SvelteKit', 'TypeScript']
-			},
-			{
-				title: '[Prosjektnavn 2]',
-				description: '[Kort beskrivelse — hva det gjør og resultatet.]',
-				tags: ['ASP.NET Core', 'PostgreSQL']
+				title: 'Kunbord',
+				description:
+					'Et minimalistisk kryptert kanban-brett med arbeidsområder, Free- og Super-nivå, Google- eller e-postinnlogging, og mer.',
+				url: 'https://kunbord.com',
+				favicon: 'https://www.kunbord.com/favicon.ico'
 			}
 		]
 	},
 	contact: {
 		title: 'Ta kontakt',
 		subtitle: 'Planlegger du et backend- eller fullstackprosjekt? Jeg tar gjerne en prat.',
-		email: 'vegardhaglund@proton.me',
+		email: 'kontakt@haglundsoftware.no',
 		emailLabel: 'E-post',
 		location: 'Norge',
 		locationLabel: 'Sted',
 		ctaEmail: 'Send e-post',
-		linkedInUrl: 'https://linkedin.com/in/vegardhaglund',
-		ctaLinkedIn: 'LinkedIn'
+		linkedInUrl: 'https://github.com/Haglund-software',
+		ctaLinkedIn: 'GitHub'
 	},
 	footer: {
 		tagline: 'Selvstendig utvikler innen backend og fullstack.',
-		rights: '© Haglund Software — Norge'
+		orgNumber: 'Org.nr. 937 564 910',
+		rights: 'Haglund Software — Norge'
 	}
 };

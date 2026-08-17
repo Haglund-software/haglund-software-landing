@@ -30,6 +30,10 @@ export interface Itranslations {
 			title: string;
 			summary: string;
 		}[];
+		stackTitle: string;
+		stackIntro: string;
+		contactNote: string;
+		contactCta: string;
 	};
 	projects: {
 		title: string;
@@ -37,8 +41,8 @@ export interface Itranslations {
 		items: {
 			title: string;
 			description: string;
-			tags: string[];
 			url?: string;
+			favicon?: string;
 		}[];
 	};
 	contact: {
@@ -54,6 +58,9 @@ export interface Itranslations {
 	};
 	footer: {
 		tagline: string;
+		orgNumber: string;
 		rights: string;
 	};
 }
+
+export type Project = Itranslations['projects']['items'][number];

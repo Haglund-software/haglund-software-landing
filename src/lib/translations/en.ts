@@ -28,54 +28,62 @@ export const englishTranslations: Itranslations = {
 	},
 	services: {
 		title: 'Services',
-		intro: 'How I typically help — scope and stack are tailored to each project.',
+		intro:
+			'From a simple site with a domain to a full-stack product on a cloud database — I can take the piece you need, or the whole thing.',
 		items: [
 			{
-				title: 'Backend APIs',
+				title: 'Static sites & domains',
 				summary:
-					'ASP.NET Core with PostgreSQL or SQL Server — API design, persistence, integrations, and OpenAPI.'
+					'Landing pages and marketing sites, including domain setup, DNS, and hosting so the site actually goes live.'
 			},
 			{
-				title: 'Full-stack delivery',
+				title: 'APIs',
 				summary:
-					'Backend through frontend — Docker Compose, migrations, and builds ready for deployment.'
+					'Dedicated APIs with or without authentication — design, persistence, integrations, and OpenAPI you can call from any client.'
 			},
 			{
-				title: 'Web apps & sites',
+				title: 'Frontend integrations',
 				summary:
-					'SvelteKit, React, and TypeScript — dashboards, internal tools, and marketing sites.'
+					'Connect an existing UI to a backend, or build the frontend that talks to an API you already have.'
+			},
+			{
+				title: 'Full-stack apps',
+				summary:
+					'End-to-end products with cloud databases, auth, APIs, and the web app in front — or anything in between.'
 			}
-		]
+		],
+		stackTitle: 'Stack',
+		stackIntro: 'Tools I reach for most often — chosen to fit the job, not the other way around.',
+		contactNote: 'Need something more specific? We can sort out scope, stack, and next steps.',
+		contactCta: 'Get in touch'
 	},
 	projects: {
 		title: 'Projects',
 		subtitle: 'Selected client work and side projects.',
 		items: [
 			{
-				title: '[Project name 1]',
-				description: '[Short description — what it does and the outcome.]',
-				tags: ['SvelteKit', 'TypeScript']
-			},
-			{
-				title: '[Project name 2]',
-				description: '[Short description — what it does and the outcome.]',
-				tags: ['ASP.NET Core', 'PostgreSQL']
+				title: 'Kunbord',
+				description:
+					'A minimalist encrypted kanban board with workspaces, Free and Super tiers, Google or email login, and more.',
+				url: 'https://kunbord.com',
+				favicon: 'https://www.kunbord.com/favicon.ico'
 			}
 		]
 	},
 	contact: {
 		title: 'Get in touch',
 		subtitle: "Have a backend or full-stack project in mind? I'd like to hear about it.",
-		email: 'vegardhaglund@proton.me',
+		email: 'contact@haglundsoftware.no',
 		emailLabel: 'Email',
 		location: 'Norway',
 		locationLabel: 'Location',
 		ctaEmail: 'Send email',
-		linkedInUrl: 'https://linkedin.com/in/vegardhaglund',
-		ctaLinkedIn: 'LinkedIn'
+		linkedInUrl: 'https://github.com/Haglund-software',
+		ctaLinkedIn: 'GitHub'
 	},
 	footer: {
 		tagline: 'Solo developer. Backend and full-stack.',
-		rights: '© Haglund Software — Norway'
+		orgNumber: 'Org. no. 937 564 910',
+		rights: 'Haglund Software — Norway'
 	}
 };

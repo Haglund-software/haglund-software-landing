@@ -11,6 +11,6 @@ export const translations: Record<TranslationLocale, Itranslations> = {
 	no: norwegianTranslations
 };
 
-export function getTranslations(locale: string = 'en'): Itranslations {
+export function getTranslations(locale: string = 'no'): Itranslations {
 	return locale.toLowerCase().startsWith('no') ? translations.no : translations.en;
 }

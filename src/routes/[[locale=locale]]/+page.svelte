@@ -1,12 +1,51 @@
 <script lang="ts">
-	import portrait from '$lib/assets/Portrait.webp';
+	import haglundSoftwareLogo from '$lib/assets/haglund-software-logo-536px.webp';
+	import ProjectCard from '$lib/components/ProjectCard.svelte';
+	import TechStack from '$lib/components/TechStack.svelte';
+
+	import portrait from '$lib/assets/githubSelfie-171px.webp';
 	import { withLocale } from '$lib/paths';
+	import {
+		absoluteUrl,
+		alternateLocales,
+		htmlLang,
+		localeAbsoluteUrl,
+		ogImagePath,
+		ogLocale,
+		ogLocaleAlternate,
+		siteName,
+		siteUrl
+	} from '$lib/site';
 	import type { TranslationLocale } from '$lib/translations';
 
 	let { data } = $props();
 
 	const locale = $derived(data.locale);
 	const t = $derived(data.t);
+	const canonicalUrl = $derived(localeAbsoluteUrl(locale));
+	const ogImageUrl = $derived(absoluteUrl(ogImagePath));
+	const pageLang = $derived(htmlLang(locale));
+	const jsonLd = $derived(
+		JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'ProfessionalService',
+			name: siteName,
+			url: siteUrl,
+			description: t.meta.description,
+			email: t.contact.email,
+			areaServed: {
+				'@type': 'Country',
+				name: 'Norway'
+			},
+			founder: {
+				'@type': 'Person',
+				name: 'Vegard Haglund',
+				url: siteUrl,
+				sameAs: [t.contact.linkedInUrl]
+			},
+			sameAs: [t.contact.linkedInUrl]
+		})
+	);
 
 	const sections = $derived([
 		{ id: 'hero', label: t.nav.hero, theme: 'hero' as const },
@@ -31,7 +70,7 @@
 					}
 				}
 			},
-			{ rootMargin: '-40% 0px -40% 0px', threshold: [0, 0.25, 0.5 , 0.75, 1] }
+			{ rootMargin: '-40% 0px -40% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
 		);
 
 		for (const el of elements) observer.observe(el);
@@ -43,44 +82,79 @@
 	}
 
 	$effect(() => {
-		document.documentElement.lang = locale;
+		document.documentElement.lang = pageLang;
 	});
-
-
 </script>
 
 <svelte:head>
 	<title>{t.meta.title}</title>
 	<meta name="description" content={t.meta.description} />
+	<link rel="canonical" href={canonicalUrl} />
+	{#each alternateLocales as alt (alt.hreflang)}
+		<link rel="alternate" hreflang={alt.hreflang} href={localeAbsoluteUrl(alt.locale)} />
+	{/each}
+	<link rel="alternate" hreflang="x-default" href={localeAbsoluteUrl('no')} />
+
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content={siteName} />
+	<meta property="og:title" content={t.meta.title} />
+	<meta property="og:description" content={t.meta.description} />
+	<meta property="og:url" content={canonicalUrl} />
+	<meta property="og:locale" content={ogLocale(locale)} />
+	<meta property="og:locale:alternate" content={ogLocaleAlternate(locale)} />
+	<meta property="og:image" content={ogImageUrl} />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={t.meta.title} />
+	<meta name="twitter:description" content={t.meta.description} />
+	<meta name="twitter:image" content={ogImageUrl} />
+
+	{@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 
-<!-- Locale toggle -->
-<div class="fixed top-4 right-4 z-50 flex gap-1 rounded-lg bg-base-100/80 p-1 shadow-sm backdrop-blur">
-	<a
-		href={localeHref('en')}
-		class="btn btn-ghost btn-sm {locale === 'en' ? 'btn-active' : ''}"
-		aria-current={locale === 'en' ? 'page' : undefined}
+<header class="absolute top-0 flex h-24 w-dvw flex-1 bg-white">
+	<img
+		src={haglundSoftwareLogo}
+		alt="Logo"
+		width="200px"
+		height="auto"
+		class="w-72 object-cover md:w-96 xl:w-lg"
+	/>
+	<!-- Locale toggle -->
+	<div
+		class="fixed top-4 right-4 z-50 flex gap-1 rounded-lg bg-secondary p-1 shadow-sm backdrop-blur"
 	>
-		EN
-	</a>
-	<a
-		href={localeHref('no')}
-		class="btn btn-ghost btn-sm {locale === 'no' ? 'btn-active' : ''}"
-		aria-current={locale === 'no' ? 'page' : undefined}
-	>
-		NO
-	</a>
-</div>
+		<a
+			href={localeHref('en')}
+			class="btn btn-ghost btn-sm {locale === 'en' ? 'btn-active' : ''}"
+			aria-current={locale === 'en' ? 'page' : undefined}
+		>
+			EN
+		</a>
+		<a
+			href={localeHref('no')}
+			class="btn btn-ghost btn-sm {locale === 'no' ? 'btn-active' : ''}"
+			aria-current={locale === 'no' ? 'page' : undefined}
+		>
+			NO
+		</a>
+	</div>
+</header>
 
 <!--Side nav -->
 <nav
-	class="fixed bg-neutral p-4 rounded-2xl top-30 border border-base-300/20 z-40 hidden -translate-y-1/2 flex-col gap-2 md:left-8 md:flex w-32"
+	class="fixed top-50 z-40 hidden w-32 -translate-y-1/2 flex-col gap-2 rounded-2xl border border-base-300/20 bg-neutral p-4 md:left-8 md:flex"
 	aria-label="Section navigation"
 >
 	{#each sections as section (section.id)}
 		<a
+			data-sveltekit-noscroll
 			href="#{section.id}"
-			class="{activeSection === section.id ? 'font-semibold text-neutral-content border-e-2 border-text-neutral-content pe-2' : 'text-neutral-content/75 hover:text-neutral-content transition-colors text-sm'}"
+			class={activeSection === section.id
+				? 'border-text-neutral-content border-e-2 pe-2 font-semibold text-neutral-content'
+				: 'text-sm text-neutral-content/90 transition-colors hover:text-neutral-content'}
 			aria-current={activeSection === section.id ? 'location' : undefined}
 		>
 			{section.label}
@@ -90,36 +164,38 @@
 
 <main class="flex flex-1 flex-col">
 	<!-- Hero -->
-	<section
-		id="hero"
-		class="bg-primary flex min-h-dvh flex-col justify-center px-6 py-16 md:px-12"
-	>
-		<div class="text-primary-content mx-auto max-w-2xl">
-			<p class=" mb-2 text-sm font-medium tracking-wide uppercase">{t.nav.brand}</p>
-			<h1 class="text-primary-content/80 mb-4 text-4xl font-bold tracking-tight md:text-5xl">{t.hero.headline}</h1>
-			<p class="text-primary-content/70 mb-8 text-lg">{t.hero.tagline}</p>
-			<a href="#contact" class="btn btn-primary-content">{t.hero.cta}</a>
+
+	<section id="hero" class="flex min-h-dvh flex-col justify-center bg-primary px-6 py-16 md:px-12">
+		<div class="mx-auto max-w-2xl text-primary-content">
+			<h1 class="mb-4 text-4xl font-bold tracking-tight text-primary-content/90 md:text-5xl">
+				{t.hero.headline}
+			</h1>
+			<p class="mb-8 text-lg text-primary-content/90">{t.hero.tagline}</p>
+			<a href="#contact" class="btn-primary-content btn">{t.hero.cta}</a>
 		</div>
 	</section>
-
 
 	<!-- About -->
 	<section
 		id="about"
-		class="bg-secondary flex min-h-dvh w-full flex-col justify-center px-6 py-16 md:px-12"
+		class="flex min-h-dvh w-full flex-col justify-center bg-secondary/20 px-6 py-16 md:px-12"
 	>
-		<div class="text-secondary-content  mx-auto flex max-w-3xl flex-col items-center gap-8 md:flex-row md:items-start">
+		<div
+			class="mx-auto flex max-w-3xl flex-col items-center gap-8 text-secondary-content md:flex-row md:items-start"
+		>
 			<img
 				src={portrait}
 				alt={t.about.portraitAlt}
 				width="192"
 				height="192"
-				class="ring-secondary-content/20 h-48 w-48 shrink-0 rounded-2xl object-cover shadow-lg ring-2"
+				class="h-48 w-48 shrink-0 rounded-2xl object-cover shadow-lg ring-2 ring-secondary-content/20"
 			/>
 			<div>
 				<h2 class="mb-4 text-3xl font-bold">{t.about.title}</h2>
-				<p class="text-secondary-content text-pretty text-sm md:text-lg mb-6 leading-relaxed">{t.about.body}</p>
-				<p class="text-secondary-content/75 text-sm">
+				<p class="mb-6 text-sm leading-relaxed text-pretty text-secondary-content md:text-lg">
+					{t.about.body}
+				</p>
+				<p class="text-sm text-secondary-content/75">
 					{t.about.org} · {t.about.location}
 				</p>
 			</div>
@@ -129,51 +205,42 @@
 	<!-- Services -->
 	<section
 		id="services"
-		class="bg-accent/20 flex min-h-dvh flex-col justify-center px-6 py-16 md:px-12"
+		class="flex min-h-dvh flex-col justify-center bg-accent/20 px-6 py-16 md:px-12"
 	>
-		<div class="mx-auto max-w-2xl text-accent-content">
-			<h2 class=" mb-2 text-3xl font-bold">{t.services.title}</h2>
-			<p class="text-accent-content/70 mb-8">{t.services.intro}</p>
-			<ul class="space-y-6">
+		<div class="mx-auto w-full max-w-3xl text-primary-content">
+			<h2 class="mb-2 text-3xl font-bold">{t.services.title}</h2>
+			<p class="mb-10 text-lg text-pretty text-primary-content/80">{t.services.intro}</p>
+			<ul class="mb-12 grid gap-6 sm:grid-cols-2">
 				{#each t.services.items as item (item.title)}
-					<li class="border-accent-content/50 border-l-2 pl-4">
-						<h3 class="mb-1 font-semibold">{item.title}</h3>
-						<p class="text-accent-content/70 text-sm">{item.summary}</p>
+					<li class="rounded-xl border border-primary-content/15 bg-base-100/40 p-5">
+						<h3 class="mb-2 font-semibold">{item.title}</h3>
+						<p class="text-sm leading-relaxed text-primary-content/75">{item.summary}</p>
 					</li>
 				{/each}
 			</ul>
+			<h3 class="mb-2 text-xl font-semibold">{t.services.stackTitle}</h3>
+			<p class="mb-5 text-sm text-primary-content/75">{t.services.stackIntro}</p>
+			<TechStack />
+			<p class="mt-8 text-sm text-primary-content/75">
+				{t.services.contactNote}
+				<a href="#contact" class="ms-1 link font-medium text-primary-content link-hover"
+					>{t.services.contactCta}</a
+				>
+			</p>
 		</div>
 	</section>
 
 	<!-- Projects -->
 	<section
 		id="projects"
-		class="bg-base-300 flex min-h-dvh flex-col justify-center px-6 py-16 md:px-12"
+		class="flex min-h-dvh flex-col justify-center bg-base-300 px-6 py-16 md:px-12"
 	>
 		<div class="mx-auto max-w-2xl text-base-content">
 			<h2 class="mb-2 text-3xl font-bold">{t.projects.title}</h2>
-			<p class="text-base-content/70 mb-8">{t.projects.subtitle}</p>
+			<p class="mb-8 text-base-content/90">{t.projects.subtitle}</p>
 			<div class="space-y-6">
-				{#each t.projects.items as project, i (i)}
-					<article class="card bg-base-100 shadow-sm text-base-content">
-						<div class="card-body">
-							{#if project.url}
-								<h3 class="card-title text-lg">
-									<a href={project.url} class="link link-hover" target="_blank" rel="noopener noreferrer">
-										{project.title}
-									</a>
-								</h3>
-							{:else}
-								<h3 class="card-title text-lg">{project.title}</h3>
-							{/if}
-							<p class="text-base-content/90 text-sm">{project.description}</p>
-							<div class="mt-2 flex flex-wrap gap-2">
-								{#each project.tags as tag (tag)}
-									<span class="badge badge-outline badge-sm ">{tag}</span>
-								{/each}
-							</div>
-						</div>
-					</article>
+				{#each t.projects.items as project (project.title)}
+					<ProjectCard {project} />
 				{/each}
 			</div>
 		</div>
@@ -182,28 +249,32 @@
 	<!-- Contact -->
 	<section
 		id="contact"
-		class="bg-info/90 flex min-h-dvh flex-col justify-center px-6 py-16 md:px-12"
+		class="flex min-h-dvh flex-col justify-center bg-info/20 px-6 py-16 md:px-12"
 	>
-		<div class="mx-auto max-w-2xl text-info-content">
+		<div class="mx-auto max-w-2xl text-secondary-content">
 			<h2 class="mb-2 text-3xl font-bold">{t.contact.title}</h2>
-			<p class="text-info-content/85 mb-8">{t.contact.subtitle}</p>
+			<p class="mb-8 text-secondary-content/85">{t.contact.subtitle}</p>
 			<dl class="mb-8 space-y-4">
 				<div>
-					<dt class="text-info-content/75 text-sm font-medium">{t.contact.emailLabel}</dt>
-					<dd class="text-info-content">
-						<a href="mailto:{t.contact.email}" class="link link-info-content font-medium">{t.contact.email}</a>
+					<dt class="text-sm font-medium text-secondary-content/75">{t.contact.emailLabel}</dt>
+					<dd class="text-secondary-content">
+						<a href="mailto:{t.contact.email}" class="link-info-content link font-medium"
+							>{t.contact.email}</a
+						>
 					</dd>
 				</div>
 				<div>
-					<dt class="text-info-content/75 text-sm font-medium">{t.contact.locationLabel}</dt>
-					<dd class="text-info-content">{t.contact.location}</dd>
+					<dt class="text-sm font-medium text-secondary-content/75">{t.contact.locationLabel}</dt>
+					<dd class="text-secondary-content">{t.contact.location}</dd>
 				</div>
 			</dl>
 			<div class="flex flex-wrap gap-3">
-				<a href="mailto:{t.contact.email}" class="btn btn-primary">{t.contact.ctaEmail}</a>
+				<a href="mailto:{t.contact.email}" class="btn btn-outline text-primary-content btn-primary"
+					>{t.contact.ctaEmail}</a
+				>
 				<a
 					href={t.contact.linkedInUrl}
-					class="btn btn-outline btn-neutral"
+					class="btn btn-outline text-primary-content btn-primary"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
@@ -214,7 +285,8 @@
 	</section>
 </main>
 
-<footer class="border-base-300 border-t px-6 py-8 text-center md:pl-24">
-	<p class="text-base-content/70 mb-1 text-sm">{t.footer.tagline}</p>
-	<p class="text-base-content/50 text-xs">{t.footer.rights}</p>
+<footer class="border-t border-base-300 px-6 py-8 text-center md:pl-24">
+	<p class="mb-1 text-sm text-base-content/90">{t.footer.tagline}</p>
+	<p class="mb-1 text-xs text-base-content/80">{t.footer.orgNumber}</p>
+	<p class="text-xs text-base-content/80">{t.footer.rights}</p>
 </footer>

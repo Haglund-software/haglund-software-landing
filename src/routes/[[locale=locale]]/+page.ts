@@ -10,7 +10,7 @@ export const entries = () => [
 ];
 
 export const load: PageLoad = ({ params }) => {
-	if (params.locale === 'en') throw redirect(308, '/');
-	const locale: TranslationLocale = params.locale === 'no' ? 'no' : 'en';
+	if (params.locale === 'no') throw redirect(308, '/');
+	const locale: TranslationLocale = params.locale === 'en' ? 'en' : 'no';
 	return { locale, t: getTranslations(locale) };
 };
