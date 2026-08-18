@@ -71,8 +71,32 @@
 /*	--noise: 0;*/
 /*}*/
 
+:root {
+	--dock-height: 4rem;
+}
+
+@media (min-width: 768px) {
+	:root {
+		--dock-height: 5rem;
+	}
+}
+
 html {
 	scroll-behavior: smooth;
+}
+
+@media (max-width: 1023px) {
+	html {
+		scroll-padding-bottom: calc(var(--dock-height) + env(safe-area-inset-bottom, 0px));
+	}
+
+	main section[id] {
+		scroll-margin-bottom: calc(var(--dock-height) + env(safe-area-inset-bottom, 0px));
+	}
+
+	.with-dock-inset {
+		padding-bottom: calc(2rem + var(--dock-height) + env(safe-area-inset-bottom, 0px));
+	}
 }
 
 #svelte-app {

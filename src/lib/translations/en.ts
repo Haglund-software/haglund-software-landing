@@ -2,8 +2,9 @@ import type { Itranslations } from './Itranslation';
 
 export const englishTranslations: Itranslations = {
 	meta: {
-		title: 'Haglund Software',
-		description: 'Solo backend and full-stack developer in Norway — Vegard Haglund'
+		title: 'Haglund Software — Backend & Full-Stack Developer in Norway',
+		description:
+			'Solo backend and full-stack developer in Norway. APIs, cloud databases, static sites, and full-stack apps — from idea to production. Get in touch with Vegard Haglund.'
 	},
 	nav: {
 		brand: 'Haglund Software',

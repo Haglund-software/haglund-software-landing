@@ -62,19 +62,44 @@
 		const elements = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
 		if (elements.length === 0) return;
 
-		const observer = new IntersectionObserver(
-			(entries) => {
-				for (const entry of entries) {
-					if (entry.isIntersecting) {
-						activeSection = entry.target.id;
-					}
-				}
-			},
-			{ rootMargin: '-40% 0px -40% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
-		);
+		const dockMq = window.matchMedia('(max-width: 1023px)');
 
-		for (const el of elements) observer.observe(el);
-		return () => observer.disconnect();
+		const getRootMargin = () => {
+			if (!dockMq.matches) return '-40% 0px -40% 0px';
+
+			const dock = document.querySelector<HTMLElement>('nav.dock');
+			const dockPx = dock?.offsetHeight ?? 0;
+			const inset = Math.round(window.innerHeight * 0.4);
+			return `-${inset}px 0px -${inset + dockPx}px 0px`;
+		};
+
+		let observer: IntersectionObserver;
+
+		const observe = () => {
+			observer?.disconnect();
+			observer = new IntersectionObserver(
+				(entries) => {
+					const visible = entries
+						.filter((entry) => entry.isIntersecting)
+						.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+					if (visible[0]) {
+						activeSection = visible[0].target.id;
+					}
+				},
+				{ rootMargin: getRootMargin(), threshold: [0, 0.25, 0.5, 0.75, 1] }
+			);
+
+			for (const el of elements) observer.observe(el);
+		};
+
+		observe();
+		dockMq.addEventListener('change', observe);
+		window.addEventListener('resize', observe);
+		return () => {
+			dockMq.removeEventListener('change', observe);
+			window.removeEventListener('resize', observe);
+			observer?.disconnect();
+		};
 	});
 
 	function localeHref(target: TranslationLocale) {
@@ -124,20 +149,20 @@
 	/>
 	<!-- Locale toggle -->
 	<div
-		class="fixed top-4 right-4 z-50 flex gap-1 rounded-lg bg-secondary p-1 shadow-sm backdrop-blur"
+		class="absolute top-2 right-2 z-50 flex gap-0 rounded-lg bg-secondary p-1 shadow-sm backdrop-blur"
 	>
 		<a
 			href={localeHref('en')}
-			data-sveltekit-reload
-			class="btn btn-ghost btn-sm {locale === 'en' ? 'btn-active' : ''}"
+			// data-sveltekit-reload
+			class="btn btn-ghost btn-xs {locale === 'en' ? 'btn-active' : ''}"
 			aria-current={locale === 'en' ? 'page' : undefined}
 		>
 			EN
 		</a>
 		<a
 			href={localeHref('no')}
-			data-sveltekit-reload
-			class="btn btn-ghost btn-sm {locale === 'no' ? 'btn-active' : ''}"
+			// data-sveltekit-reload
+			class="btn btn-ghost btn-xs {locale === 'no' ? 'btn-active' : ''}"
 			aria-current={locale === 'no' ? 'page' : undefined}
 		>
 			NO
@@ -147,7 +172,7 @@
 
 <!--Side nav -->
 <nav
-	class="fixed top-50 z-40 hidden w-32 -translate-y-1/2 flex-col gap-2 rounded-2xl border border-base-300/20 bg-neutral p-4 md:left-8 md:flex"
+	class="fixed top-50 z-40 hidden w-32 -translate-y-1/2 flex-col gap-2 rounded-2xl border border-base-300/20 bg-neutral p-4 lg:left-8 lg:flex"
 	aria-label="Section navigation"
 >
 	{#each sections as section (section.id)}
@@ -160,6 +185,22 @@
 			aria-current={activeSection === section.id ? 'location' : undefined}
 		>
 			{section.label}
+		</a>
+	{/each}
+</nav>
+
+<nav
+	class="dock z-40 md:dock-xl lg:hidden"
+	aria-label="Section navigation"
+>
+	{#each sections as section (section.id)}
+		<a
+			data-sveltekit-noscroll
+			href="#{section.id}"
+			class={activeSection === section.id ? 'dock-active font-semibold text-base-content' : ''}
+			aria-current={activeSection === section.id ? 'location' : undefined}
+		>
+			<span class="dock-label">{section.label}</span>
 		</a>
 	{/each}
 </nav>
@@ -287,7 +328,7 @@
 	</section>
 </main>
 
-<footer class="border-t border-base-300 px-6 py-8 text-center md:pl-24">
+<footer class="with-dock-inset border-t border-base-300 px-6 pt-8 text-center md:pl-24 lg:py-8">
 	<p class="mb-1 text-sm text-base-content/90">{t.footer.tagline}</p>
 	<p class="mb-1 text-xs text-base-content/80">{t.footer.orgNumber}</p>
 	<p class="text-xs text-base-content/80">{t.footer.rights}</p>
