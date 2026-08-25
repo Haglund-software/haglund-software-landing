@@ -83,6 +83,7 @@
 
 html {
 	scroll-behavior: smooth;
+	scrollbar-gutter: stable;
 }
 
 @media (max-width: 1023px) {

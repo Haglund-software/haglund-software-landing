@@ -1,31 +1,33 @@
 <script lang="ts">
-	import typescript from '$lib/assets/company-logos/typescript.svg?raw';
-	import postgresql from '$lib/assets/company-logos/postgresql.svg?raw';
-	import dotnet from '$lib/assets/company-logos/dotnet.svg?raw';
-	import tanstack from '$lib/assets/company-logos/tanstack.svg?raw';
-	import redis from '$lib/assets/company-logos/redis.svg?raw';
-	import svelte from '$lib/assets/company-logos/svelte.svg?raw';
-	import react from '$lib/assets/company-logos/react.svg?raw';
-	import nextjs from '$lib/assets/company-logos/nextdotjs.svg?raw';
-	import tailwind from '$lib/assets/company-logos/tailwindcss.svg?raw';
+	import typescript from '$lib/assets/company-logos/typescript.svg?url';
+	import postgresql from '$lib/assets/company-logos/postgresql.svg?url';
+	import dotnet from '$lib/assets/company-logos/dotnet.svg?url';
+	import tanstack from '$lib/assets/company-logos/tanstack.svg?url';
+	import redis from '$lib/assets/company-logos/redis.svg?url';
+	import svelte from '$lib/assets/company-logos/svelte.svg?url';
+	import react from '$lib/assets/company-logos/react.svg?url';
+	import nextjs from '$lib/assets/company-logos/nextdotjs.svg?url';
+	import tailwind from '$lib/assets/company-logos/tailwindcss.svg?url';
 	import colors from '$lib/assets/company-logos/colors.json';
 
-	function tintSvg(svg: string, color: string) {
-		return svg
-			.replace(/\sfill="[^"]*"/g, '')
-			.replace(/<svg\b/, `<svg fill="${color}" aria-hidden="true" class="size-full"`);
+	type MonochromeTech = { name: string; color: string; icon: string; multicolor?: false };
+	type MulticolorTech = { name: string; icon: string; multicolor: true };
+	type Tech = MonochromeTech | MulticolorTech;
+
+	function iconMaskStyle(icon: string, color: string) {
+		return `background-color: ${color}; mask-image: url(${icon}); -webkit-mask-image: url(${icon});`;
 	}
 
-	const stack = [
-		{ name: 'Svelte', color: colors.svelte, icon: tintSvg(svelte, colors.svelte) },
-		{ name: 'React', color: colors.react, icon: tintSvg(react, colors.react) },
-		{ name: 'Next.js', color: colors.nextJs, icon: tintSvg(nextjs, colors.nextJs) },
-		{ name: 'TanStack', color: '#121212', icon: tintSvg(tanstack, '#121212') },
-		{ name: 'TypeScript', color: colors.typescript, icon: tintSvg(typescript, colors.typescript) },
-		{ name: 'Tailwind CSS', color: colors.tailwind, icon: tintSvg(tailwind, colors.tailwind) },
-		{ name: '.NET', color: colors.dotnet, icon: tintSvg(dotnet, colors.dotnet) },
-		{ name: 'PostgreSQL', color: colors.postgres, icon: tintSvg(postgresql, colors.postgres) },
-		{ name: 'Redis', color: colors.redis, icon: tintSvg(redis, colors.redis) }
+	const stack: Tech[] = [
+		{ name: 'Svelte', color: colors.svelte, icon: svelte },
+		{ name: 'React', color: colors.react, icon: react },
+		{ name: 'Next.js', color: colors.nextJs, icon: nextjs },
+		{ name: 'TanStack', color: '#121212', icon: tanstack },
+		{ name: 'TypeScript', color: colors.typescript, icon: typescript },
+		{ name: 'Tailwind CSS', color: colors.tailwind, icon: tailwind },
+		{ name: '.NET', icon: dotnet, multicolor: true },
+		{ name: 'PostgreSQL', icon: postgresql, multicolor: true },
+		{ name: 'Redis', color: colors.redis, icon: redis }
 	];
 </script>
 
@@ -34,10 +36,27 @@
 		<li
 			class="flex items-center gap-2 rounded-lg border border-base-300 bg-base-100 px-3 py-2 text-sm font-medium text-base-content"
 		>
-			<span class="inline-block size-5 shrink-0 [&>svg]:block [&>svg]:size-full">
-				{@html tech.icon}
-			</span>
+			{#if tech.multicolor}
+				<img src={tech.icon} alt="" class="size-5 shrink-0" aria-hidden="true" />
+			{:else}
+				<span
+					class="icon-mask inline-block size-5 shrink-0"
+					style={iconMaskStyle(tech.icon, tech.color)}
+					aria-hidden="true"
+				></span>
+			{/if}
 			{tech.name}
 		</li>
 	{/each}
 </ul>
+
+<style>
+	.icon-mask {
+		mask-size: contain;
+		mask-repeat: no-repeat;
+		mask-position: center;
+		-webkit-mask-size: contain;
+		-webkit-mask-repeat: no-repeat;
+		-webkit-mask-position: center;
+	}
+</style>

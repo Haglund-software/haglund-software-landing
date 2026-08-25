@@ -2,7 +2,9 @@
 	import haglundSoftwareLogo from '$lib/assets/haglund-software-logo-536px.webp';
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import TechStack from '$lib/components/TechStack.svelte';
-
+	import { Briefcase, FolderKanban, House, Mail, User } from '@lucide/svelte';
+	import type { IconProps } from '@lucide/svelte';
+	import type { Component } from 'svelte';
 	import portrait from '$lib/assets/githubSelfie-171px.webp';
 	import { withLocale } from '$lib/paths';
 	import {
@@ -47,12 +49,24 @@
 		})
 	);
 
+	type SectionIcon = Component<IconProps>;
+
 	const sections = $derived([
-		{ id: 'hero', label: t.nav.hero, theme: 'hero' as const },
-		{ id: 'about', label: t.nav.about, theme: 'about' as const },
-		{ id: 'services', label: t.nav.services, theme: 'services' as const },
-		{ id: 'projects', label: t.nav.projects, theme: 'projects' as const },
-		{ id: 'contact', label: t.nav.contact, theme: 'contact' as const }
+		{ id: 'hero', label: t.nav.hero, theme: 'hero' as const, icon: House as SectionIcon },
+		{ id: 'about', label: t.nav.about, theme: 'about' as const, icon: User as SectionIcon },
+		{
+			id: 'services',
+			label: t.nav.services,
+			theme: 'services' as const,
+			icon: Briefcase as SectionIcon
+		},
+		{
+			id: 'projects',
+			label: t.nav.projects,
+			theme: 'projects' as const,
+			icon: FolderKanban as SectionIcon
+		},
+		{ id: 'contact', label: t.nav.contact, theme: 'contact' as const, icon: Mail as SectionIcon }
 	]);
 
 	let activeSection = $state<string>('hero');
@@ -139,7 +153,7 @@
 	{@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 
-<header class="absolute top-0 flex h-24 w-dvw flex-1 bg-white">
+<header class="absolute top-0 flex h-24 w-full min-w-0 flex-1 justify-between bg-white">
 	<img
 		src={haglundSoftwareLogo}
 		alt="Logo"
@@ -148,9 +162,7 @@
 		class="w-72 object-cover md:w-96 xl:w-lg"
 	/>
 	<!-- Locale toggle -->
-	<div
-		class="absolute top-2 right-2 z-50 flex gap-0 rounded-lg bg-secondary p-1 shadow-sm backdrop-blur"
-	>
+	<div class="h-fit mt-2 me-8 z-50 rounded-lg bg-secondary p-1 shadow-sm backdrop-blur">
 		<a
 			href={localeHref('en')}
 			// data-sveltekit-reload
@@ -189,17 +201,16 @@
 	{/each}
 </nav>
 
-<nav
-	class="dock z-40 md:dock-xl lg:hidden"
-	aria-label="Section navigation"
->
+<nav class="dock z-40 md:dock-xl lg:hidden" aria-label="Section navigation">
 	{#each sections as section (section.id)}
 		<a
 			data-sveltekit-noscroll
 			href="#{section.id}"
 			class={activeSection === section.id ? 'dock-active font-semibold text-base-content' : ''}
 			aria-current={activeSection === section.id ? 'location' : undefined}
+			aria-label={section.label}
 		>
+			<section.icon class="size-5 shrink-0 md:size-6" aria-hidden="true" strokeWidth={1.75} />
 			<span class="dock-label">{section.label}</span>
 		</a>
 	{/each}
@@ -208,7 +219,7 @@
 <main class="flex flex-1 flex-col">
 	<!-- Hero -->
 
-	<section id="hero" class="flex min-h-dvh flex-col justify-center bg-primary px-6 py-16 md:px-12">
+	<section id="hero" class="flex min-h-dvh flex-col justify-center blue-fade px-6 py-16 md:px-12">
 		<div class="mx-auto max-w-2xl text-primary-content">
 			<h1 class="mb-4 text-4xl font-bold tracking-tight text-primary-content/90 md:text-5xl">
 				{t.hero.headline}
