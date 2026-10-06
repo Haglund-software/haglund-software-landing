@@ -21,8 +21,8 @@
 	const stack: Tech[] = [
 		{ name: 'Svelte', color: colors.svelte, icon: svelte },
 		{ name: 'React', color: colors.react, icon: react },
-		{ name: 'Next.js', color: colors.nextJs, icon: nextjs },
-		{ name: 'TanStack', color: '#121212', icon: tanstack },
+		{ name: 'Next.js', color: 'currentColor', icon: nextjs },
+		{ name: 'TanStack', color: 'currentColor', icon: tanstack },
 		{ name: 'TypeScript', color: colors.typescript, icon: typescript },
 		{ name: 'Tailwind CSS', color: colors.tailwind, icon: tailwind },
 		{ name: '.NET', icon: dotnet, multicolor: true },
